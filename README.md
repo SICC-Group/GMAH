@@ -59,22 +59,37 @@ example:
 多智能体环境：3个智能体需要在有限的时间内回收垃圾，小垃圾可以直接携带，大垃圾需要进行压缩后才能携带，重量都为1，每个智能体的负重都是3
 
 ### Install
-pip install mpe
-pip install 
-
+pip install mpe  
+pip install gym  
+pip install gymnasium  
+其余的如果存在缺少就直接pip install，和版本没多大关系
 
 ### Structure
+trash-grid
+hrl: 一些测试用的，没啥用
+PettingZoo：早期用的环境
+- pettingzoo/mpe/simple_hmpe.py: 早期改的环境
+hmpe: trash-grid的核心代码
+- env: trash-grid环境代码，hmpe和hmpe_v2: 两个版本，主要却别在于内在奖励的设计和观测空间的设计
+- algs: 算法模型, 根据环境的两个版本，分为使用卷积的和使用mlp的
+- model: 底层模型，ac架构的actor和critic模型
+- ppotrain: 某一版本的训练用的代码，主要用到里面的normalization和replaybuffer
+- test: 没用到
+- trainer: 训练脚本,收集数据调用策略进行训练
+- utils: 缓冲区存取数据，计算GAE，归一化，对奖励使用runningmean等trick
 
+`train_low.py, train_low2.py, train_ppo.py, newtrain_*.py` 训练脚本，调用执行开始训练
 
-bug: 
+todo 不同分支的代码合并上传
 
 ### Train
-
-
-
-### Test
-
-
-
+直接调用train相关的脚本执行即可，部分需要根据设置代码中的args描述选择参数，有控制是否记录中间数据等的
+`python train_ppo.py`
+`python train_low2.py`
+`python newtrain_trash_coma.py`
+`python newtrain_trash_mappo.py`
+`python newtrain_trash_low/high/gmix.py`
+***
 
 ### visualize
+`plot.ipynb`：里面包含mini-grid和trash-grid的训练结果的画图代码，这个没有暂时没有直接的场景渲染，trash-grid环境交互的渲染需要使用mini-grid中的rl-starter-files里的visual.ipynb使用mini-grid的接口根据trashgrid的state创建环境逐帧渲染
