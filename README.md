@@ -30,7 +30,6 @@ Replace map_name to train different maps
 ./train_smac.sh 
 ```
 ### plot
-执行`./scripts/evaluate_low.py, ./scripts/evaluate_hrl.py`
 1.Trash-Grid
 ```shell
 python plot_hmpe.py
